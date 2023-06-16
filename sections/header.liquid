@@ -1,0 +1,76 @@
+<h1>ヘッダータイトル：{{ section.settings.titleID }}</h1>
+
+{% for block in section.blocks %}
+  {% case block.type %}
+    {% when 'my_type_ID1' %}
+      <p>my_type_ID1</p>
+
+      {{ block.settings.my_logo | img_url: 'original' | img_tag: block.settings.my_logo.alt, 'my_logo_class' }}
+
+      {% comment %} <img src="{{ block.settings.my_logo | img_url: 'original' }}" alt=""> {% endcomment %}
+      <img
+        src="{{ block.settings.my_logo | img_url: 'large' }}"
+        alt="{{block.settings.my_logo.alt}}"
+        width="{{block.settings.my_logo.width}}"
+        height="{{block.settings.my_logo.height}}"
+      >
+      {% comment %} <img src="{{ block.settings.my_logo | img_url }}" alt=""> {% endcomment %}
+
+    {% when 'my_type_ID2' %}
+      <p>my_type_ID2</p>
+      <div style="background-color: {{ block.settings.my_color }}">マイカラー</div>
+  {% endcase %}
+{% endfor %}
+
+{% schema %}
+{
+  "name": "ヘッダー",
+  "tag": "section",
+  "class": "header-class",
+  "settings": [
+    {
+      "type": "text",
+      "id": "titleID",
+      "label": "ヘッダーテキストラベル",
+      "default": "タイトル初期表示"
+    },
+    {
+      "type": "checkbox",
+      "id": "checkboxID",
+      "label": "ヘッダーチェックボックスラベル",
+      "default": true
+    },
+    {
+      "type": "number",
+      "id": "numberID",
+      "label": "ナンバーのラベル",
+      "default": 30
+    }
+  ],
+  "max_blocks": 3,
+  "blocks": [
+    {
+      "name": "ロゴラベル",
+      "type": "my_type_ID1",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "my_logo",
+          "label": "My Logo"
+        }
+      ]
+    },
+    {
+      "name": "マイカラーラベル",
+      "type": "my_type_ID2",
+      "settings": [
+        {
+          "type": "color",
+          "id": "my_color",
+          "label": "My Color"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
